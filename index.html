@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      const d = new Date();
+      const p = new URL(window.location.href).searchParams;
+      p.set('form[year]', d.getUTCFullYear());
+      p.set('form[month]', String(d.getUTCMonth() + 1).padStart(2, '0'));
+      p.set('form[day]', String(d.getUTCDate()).padStart(2, '0'));
+      window.location.replace('https://astro.ing.iac.es/staralt/index.php?' + p.toString());
+    </script>
+  </head>
+</html>
