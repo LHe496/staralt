@@ -2,12 +2,218 @@
 <html>
   <head>
     <script>
-      const d = new Date(Date.now() - 43200000);
+      const ObservatoryMap = {
+        'Roque de los Muchachos Observatory (La Palma, Spain)': 0,
+        'Teide Observatory (Tenerife, Spain)': 1,
+        'Georgian National Astrophysical Observatory (Abastumani, Georgia)': 2,
+        'Abruzzo Astronomical Observatory - TNT (INAF-OA Abruzzo, Italy)': 3,
+        'Apache Point Observatory (New Mexico, USA)': 4,
+        'Aras de los Olmos Observatory (Spain)': 5,
+        'Asiago Astrophysical Observatory (Italy)': 6,
+        'Assy-Turgen Observatory (Kazakhstan)': 7,
+        'Bohyunsan Optical Astronomy Observatory (Korea)': 8,
+        'Brorfelde Observatory (Denmark)': 9,
+        'Byurakan Observatory (Armenia)': 10,
+        'Calar Alto Observatory (Almeria, Spain)': 11,
+        'Campo Imperatore Observatory (INAF-OA Abruzzo, Italy)': 12,
+        'Cerro Pachon Observatory (Chile)': 13,
+        'Cerro Paranal Observatory (Chile)': 14,
+        'Cerro Tololo Observatory (Chile)': 15,
+        'Dominion Astrophysical Observatory (Canada)': 16,
+        'El Leoncito Observatory (Argentina)': 17,
+        'Fred Lawrence Whipple Observatory (Arizona, USA)': 18,
+        'Guillermo Haro Astrophysical Observatory (Sonora, Mexico)': 19,
+        'Haute-Provence Observatory (France)': 20,
+        'Helmos Observatory (Greece)': 21,
+        'Iranian National Observatory, Mt. Gargash (Iran)': 22,
+        'Javalambre Astronomical Observatory (Teruel, Spain)': 23,
+        'Kitt Peak Observatory (Arizona, USA)': 24,
+        'Kryoneri Observatory (Greece)': 25,
+        'La Luz Observatory (Mexico)': 26,
+        'La Silla Observatory (Chile)': 27,
+        'Large Millimeter Telescope (Mexico)': 28,
+        'Las Campanas Observatory (Chile)': 29,
+        'Lick Observatory (California, USA)': 30,
+        'Lijiang Observatory (China)': 31,
+        'Loiano Observatory (Italy)': 32,
+        'Lulin Observatory (Taiwan)': 33,
+        'Mauna Kea Observatory (Hawaii, USA)': 34,
+        'McDonald Observatory (Texas, USA)': 35,
+        'Montsec Astronomical Observatory (Lleida, Spain)': 36,
+        'Mount Graham International Observatory (Arizona, USA)': 37,
+        'Mount John Observatory (Tekapo, New Zeland)': 38,
+        'Mount Kent Observatory (Queensland, Australia)': 39,
+        'Mount Lemon Optical Astronomy Observatory (Arizona, USA)': 40,
+        'Nanshan Station, Xinjiang Astronomical Observatory (China)': 41,
+        'National Astronomical Observatory Rozhen (Bulgaria)': 42,
+        'Observatoire de la Cote dAzur (France)': 43,
+        'Ondrejov Observatory': 44,
+        'Palomar Observatory (California, USA)': 45,
+        'Pearl Station (Canada)': 46,
+        'Pico dos Dias Observatory (Brazil)': 47,
+        'Pine Mountain Observatory (Oregon, USA)': 48,
+        'Piszkesteto Observatory (Hungary)': 49,
+        'Rosemary Hill Observatory (Florida, USA)': 50,
+        'San Pedro Martir Observatory (Mexico)': 51,
+        'Santa Martina Observatory (Chile)': 52,
+        'Seimei Telescope (Japan)': 53,
+        'Sertao de Itaparica Observatory (Brazil)': 54,
+        'Siding Spring Observatory (Australia)': 55,
+        'Astronomical Observatory of the University of Siena (Italy)': 56,
+        'Serra La Nave Observatory (INAF - OA Catania, Italy)': 57,
+        'Sierra Nevada Observatory (Granada, Spain)': 58,
+        'Skinakas Observatory (Crete, Greece)': 59,
+        'Sobaeksan Optical Astronomy Observatory (Korea)': 60,
+        'Special Astrophysical Observatory (Russia)': 61,
+        'Sutherland Observatory (South Africa)': 62,
+        'Tian Shan Observatory (Kazakhstan)': 63,
+        'Thai National Observatory, NARI (Thailand)': 64,
+        'Thueringer Landessternwarte Tautenburg (Germany)': 65,
+        'Tubitak National Observatory (Turkey)': 66,
+        'Vidojevica Astronomical Station (Serbia)': 67,
+        'Virgin Island Robotic Telescope (US Virgin Islands)': 68,
+        'Wendelstein Observatory (Germany)': 69,
+        'Wise Observatory (Israel)': 70,
+        'Xinglong Observatory (China)': 71,
+        'Zimmerwald Observatory (Bern, Switzerland)': 72
+      };
+      const TimeZoneMap = {
+        0: 0,     // Canary Islands (UTC+0)
+        1: 0,     // Canary Islands (UTC+0)
+        2: 4,     // Georgia (UTC+4)
+        3: 1,     // Italy (UTC+1)
+        4: -7,    // New Mexico, USA (UTC-7)
+        5: 1,     // Spain (UTC+1)
+        6: 1,     // Italy (UTC+1)
+        7: 5,     // Kazakhstan (UTC+5)
+        8: 9,     // Korea (UTC+9)
+        9: 1,     // Denmark (UTC+1)
+        10: 4,    // Armenia (UTC+4)
+        11: 1,    // Spain (UTC+1)
+        12: 1,    // Italy (UTC+1)
+        13: -4,   // Chile (UTC-4)
+        14: -4,   // Chile (UTC-4)
+        15: -4,   // Chile (UTC-4)
+        16: -8,   // Canada (UTC-8)
+        17: -3,   // Argentina (UTC-3)
+        18: -7,   // Arizona, USA (UTC-7)
+        19: -7,   // Mexico (UTC-7)
+        20: 1,    // France (UTC+1)
+        21: 2,    // Greece (UTC+2)
+        22: 3.5,  // Iran (UTC+3:30)
+        23: 1,    // Spain (UTC+1)
+        24: -7,   // Arizona, USA (UTC-7)
+        25: 2,    // Greece (UTC+2)
+        26: -6,   // Mexico (UTC-6)
+        27: -4,   // Chile (UTC-4)
+        28: -6,   // Mexico (UTC-6)
+        29: -4,   // Chile (UTC-4)
+        30: -8,   // California, USA (UTC-8)
+        31: 8,    // China (UTC+8)
+        32: 1,    // Italy (UTC+1)
+        33: 8,    // Taiwan (UTC+8)
+        34: -10,  // Hawaii, USA (UTC-10)
+        35: -6,   // Texas, USA (UTC-6)
+        36: 1,    // Spain (UTC+1)
+        37: -7,   // Arizona, USA (UTC-7)
+        38: 12,   // New Zealand (UTC+12)
+        39: 10,   // Australia (UTC+10)
+        40: -7,   // Arizona, USA (UTC-7)
+        41: 8,    // China (UTC+8)
+        42: 2,    // Bulgaria (UTC+2)
+        43: 1,    // France (UTC+1)
+        44: 1,    // Czech Republic (UTC+1)
+        45: -8,   // California, USA (UTC-8)
+        46: -5,   // Canada (UTC-5)
+        47: -3,   // Brazil (UTC-3)
+        48: -8,   // Oregon, USA (UTC-8)
+        49: 1,    // Hungary (UTC+1)
+        50: -5,   // Florida, USA (UTC-5)
+        51: -8,   // Mexico (UTC-8)
+        52: -4,   // Chile (UTC-4)
+        53: 9,    // Japan (UTC+9)
+        54: -3,   // Brazil (UTC-3)
+        55: 10,   // Australia (UTC+10)
+        56: 1,    // Italy (UTC+1)
+        57: 1,    // Italy (UTC+1)
+        58: 1,    // Spain (UTC+1)
+        59: 2,    // Greece (UTC+2)
+        60: 9,    // Korea (UTC+9)
+        61: 3,    // Russia (UTC+3)
+        62: 2,    // South Africa (UTC+2)
+        63: 5,    // Kazakhstan (UTC+5)
+        64: 7,    // Thailand (UTC+7)
+        65: 1,    // Germany (UTC+1)
+        66: 3,    // Turkey (UTC+3)
+        67: 1,    // Serbia (UTC+1)
+        68: -4,   // US Virgin Islands (UTC-4)
+        69: 1,    // Germany (UTC+1)
+        70: 2,    // Israel (UTC+2)
+        71: 8,    // China (UTC+8)
+        72: 1     // Switzerland (UTC+1)
+      };
+      function getObservatoryCode(value) {
+        if (typeof value === 'number' && !isNaN(value)) {
+          return value;
+        }
+        if (typeof value === 'string') {
+          if (ObservatoryMap.hasOwnProperty(value)) {
+            return ObservatoryMap[value];
+          }
+        }
+        return undefined;
+      };
+      function getObservatoryTimeZone(value) {
+        const code = getObservatoryCode(value);
+          if (code !== undefined && TimeZoneMap.hasOwnProperty(code)) {
+            return TimeZoneMap[code];
+          }
+        return undefined;
+      };
+      function getObservatoryTimeZoneByLongtitude(value) {
+        if (!value || typeof value !== 'string') return undefined;
+        const tokens = value.trim().split(/\s+/);
+        if (tokens.length === 0 || !tokens[0]) return undefined;
+        let lng;
+        if (tokens[0].includes('.')) {
+          if (tokens.length < 2) return undefined;
+          lng = parseFloat(tokens[0]);
+        } else {
+          if (tokens.length < 6) return undefined;
+          const d = parseFloat(tokens[0]);
+          const m = parseFloat(tokens[1]);
+          const s = parseFloat(tokens[2]);
+          if (isNaN(d) || isNaN(m) || isNaN(s)) return undefined;
+          lng = d + m / 60 + s / 3600;
+        }
+        if (isNaN(lng)) return undefined;
+        return Math.round(lng / 15);
+      };
       const p = new URL(window.location.href).searchParams;
-      p.set('form[year]', d.getUTCFullYear());
-      p.set('form[month]', String(d.getUTCMonth() + 1).padStart(2, '0'));
-      p.set('form[day]', String(d.getUTCDate()).padStart(2, '0'));
-      window.location.replace('https://astro.ing.iac.es/staralt/index.php?' + p.toString());
+      let tz = undefined;
+      let hasTZ = false;
+      if (p.has('form[observatory]')) {
+        tz = getObservatoryTimeZone(p.get('form[observatory]'))
+        if (tz !== undefined) hasTZ = true;
+      }
+      if (!hasTZ && p.has('form[sitecoord]')) {
+        tz = getObservatoryTimeZoneByLongtitude(p.get('form[sitecoord]'))
+      }
+      if (tz === undefined) {
+        window.location.replace('https://astro.ing.iac.es/staralt/');
+      } else {
+        const logicalLocal = new Date(Date.now() + (tz - 10) * 3600000);
+        const localYear = logicalLocal.getUTCFullYear();
+        const localMonth = logicalLocal.getUTCMonth();
+        const localDate = logicalLocal.getUTCDate();
+        const localEvening = Date.UTC(localYear, localMonth, localDate, 18, 0, 0);
+        const d = new Date(localEvening - tz * 3600000);
+
+        p.set('form[year]', d.getUTCFullYear());
+        p.set('form[month]', String(d.getUTCMonth() + 1).padStart(2, '0'));
+        p.set('form[day]', String(d.getUTCDate()).padStart(2, '0'));
+        window.location.replace('https://astro.ing.iac.es/staralt/index.php?' + p.toString());
+      }
     </script>
   </head>
 </html>
